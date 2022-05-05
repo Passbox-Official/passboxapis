@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\RoleUser;
@@ -33,5 +34,10 @@ class User extends Authenticable
     {
         return $this->belongsToMany(Role::class, 'role_user')
             ->withTimestamps();
+    }
+
+    public function system_configs(): HasMany
+    {
+        return $this->hasMany(SystemConfig::class);
     }
 }
