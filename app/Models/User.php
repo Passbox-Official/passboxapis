@@ -35,9 +35,4 @@ class User extends Authenticable
         return $this->belongsToMany(Role::class, 'role_user')
             ->withTimestamps();
     }
-
-    public function system_configs(): HasMany
-    {
-        return $this->hasMany(SystemConfig::class);
-    }
 }

@@ -33,3 +33,17 @@ if (! function_exists('valid_signup_bearer_key')) {
         return $user_key === system_config(SystemConfig::SIGNUP_TOKEN_NAME);
     }
 }
+
+if (! function_exists('valid_master_password')) {
+    /**
+     * Checking for master password in system config
+     *
+     * @param string
+     * @return bool
+     * @throws NotFoundException
+     */
+    function valid_master_password(string $user_password): bool
+    {
+        return $user_password === system_config(SystemConfig::MASTER_PASSWORD);
+    }
+}

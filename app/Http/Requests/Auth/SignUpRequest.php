@@ -24,10 +24,10 @@ class SignUpRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'email', 'min:5', 'max:25'],
+            'email' => ['required', 'unique:users', 'email', 'min:5', 'max:25'],
             'password' => ['required', 'min:4'],
             'confirm_password' => ['required'],
-            'super_password' => ['required'],
+            'master_password' => ['required'],
         ];
     }
 }

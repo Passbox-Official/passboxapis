@@ -5,31 +5,29 @@ namespace App\Http\Middleware\Auth;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Auth\AuthenticationException;
-use App\Models\SystemConfig;
+use App\Facades\User;
 
 class SignUpMiddleware
 {
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
+     * @throws \App\Exceptions\NotFoundException
+     * @throws AuthenticationException
      */
     public function handle(Request $request, Closure $next)
     {
-        $this->validate_headers($request);
-
+        $this->check_authorization_key($request);
+        if (! valid_master_password($request->input('master_password'))) {
+            throw new AuthenticationException('Invalid master password');
+        }
         return $next($request);
     }
 
-    private function validate_headers(Request $request): void
-    {
-        $this->check_authorization_key($request);
-    }
-
     /**
-     *
      * Checks if Authorization token is valid
      *
      * @param Request $request
@@ -42,7 +40,7 @@ class SignUpMiddleware
         }
 
         if (! valid_signup_bearer_key($request->bearerToken())) {
-            throw new AuthenticationException('Unauthenticated.');
+            throw new AuthenticationException('Invalid key');
         }
     }
 }

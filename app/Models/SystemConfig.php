@@ -10,4 +10,5 @@ class SystemConfig extends Model
     use HasFactory;
 
     public const SIGNUP_TOKEN_NAME = 'signup';
+    public const MASTER_PASSWORD = 'super-password';
 }
