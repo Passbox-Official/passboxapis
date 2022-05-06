@@ -17,7 +17,7 @@ class SystemConfigSeeder extends Seeder
      */
     public function run(): void
     {
-        User::find(1)->system_configs()->create([
+        SystemConfig::create([
             'name' => SystemConfig::SIGNUP_TOKEN_NAME,
             'value' => Str::random(32),
         ]);
