@@ -2,8 +2,9 @@
 
 namespace App\Services;
 
-use App\Models\User as UserModel;
 use Illuminate\Support\Facades\Hash;
+use App\Models\User as UserModel;
+use Spatie\Permission\Models\Role;
 
 class User
 {
@@ -13,6 +14,7 @@ class User
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ];
-        return UserModel::firstOrCreate($data);
+        $admin = Role::where('name' , 'admin')->first();
+        return UserModel::firstOrCreate($data)->syncRoles($admin);
     }
 }

@@ -3,15 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticable;
 use Laravel\Sanctum\HasApiTokens;
-use App\Models\RoleUser;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticable
 {
-    use HasFactory, HasApiTokens;
+    use HasFactory, HasApiTokens, HasRoles;
 
     // Account statuses
     public const INACTIVE = 0;
@@ -25,14 +23,5 @@ class User extends Authenticable
 
     protected $hidden = [
         'password',
-        'created_at',
-        'updated_at',
-        'id',
     ];
-
-    public function roles(): BelongsToMany
-    {
-        return $this->belongsToMany(Role::class, 'role_user')
-            ->withTimestamps();
-    }
 }

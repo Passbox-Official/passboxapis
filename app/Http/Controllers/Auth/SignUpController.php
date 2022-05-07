@@ -6,15 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\SignUpRequest;
 use Illuminate\Http\Request;
 use App\Facades\User;
+use App\Http\Resources\UserResource;
 
 class SignUpController extends Controller
 {
-    public function create_account(SignUpRequest $request)
+    public function create_account(SignUpRequest $request): UserResource
     {
-        try {
-            return User::create($request);
-        } catch (\Exception $exception) {
-            return $exception->getMessage();
-        }
+        return new UserResource(
+            User::create($request), 'Account created successfully'
+        );
     }
 }
