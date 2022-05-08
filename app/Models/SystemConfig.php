@@ -11,4 +11,5 @@ class SystemConfig extends Model
 
     public const BEARER_TOKEN_NAME = 'bearer-token';
     public const MASTER_PASSWORD = 'super-password';
+    public const MAX_DEVICE_LOGIN = 'max-device-login';
 }

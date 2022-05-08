@@ -10,6 +10,5 @@ $commonConfigs = [
 
 Route::group($commonConfigs, function () {
     Route::post('/signup', [SignUpController::class, 'create_account'])->middleware('signup');
-    Route::post('/login', [LoginController::class, 'do_login'])->middleware('login');
+    Route::post('/login', [LoginController::class, 'do_login'])->middleware(['login', 'max.device.login']);
 });
-

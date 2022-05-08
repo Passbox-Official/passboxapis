@@ -24,4 +24,10 @@ class User extends Authenticable
     protected $hidden = [
         'password',
     ];
+
+    public function active_devices()
+    {
+        return $this->hasMany(UserSessionHistory::class, 'user_id')
+            ->where('logout_at', null);
+    }
 }

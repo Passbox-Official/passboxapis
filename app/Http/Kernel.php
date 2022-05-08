@@ -5,6 +5,7 @@ namespace App\Http;
 use App\Http\Middleware\Auth\CheckBearerTokenMiddleware;
 use App\Http\Middleware\Auth\SignUpMiddleware;
 use App\Http\Middleware\Auth\LoginMiddleware;
+use App\Http\Middleware\Auth\MaxDeviceLoginMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -67,6 +68,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'check.bearer.token' => CheckBearerTokenMiddleware::class,
+        'max.device.login' => MaxDeviceLoginMiddleware::class,
         'signup' => SignUpMiddleware::class,
         'login' => LoginMiddleware::class,
     ];
