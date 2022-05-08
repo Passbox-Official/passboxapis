@@ -23,5 +23,9 @@ class SystemConfigSeeder extends Seeder
             'name' => SystemConfig::MASTER_PASSWORD,
             'value' => 'admin@123',
         ]);
+        SystemConfig::create([
+            'name' => SystemConfig::MAX_DEVICE_LOGIN,
+            'value' => 3,
+        ]);
     }
 }
