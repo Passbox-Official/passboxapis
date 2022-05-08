@@ -1,6 +1,5 @@
+## About Passbox
 
-## About Vani
+> This is the APIs for Passbox open source password manager.
 
-> This is the APIs for Vani open source password manager.
-
-Vani is an open source password manager
+Passbox is an open source password manager.
