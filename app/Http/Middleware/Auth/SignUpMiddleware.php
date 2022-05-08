@@ -19,27 +19,9 @@ class SignUpMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        $this->check_authorization_key($request);
         if (! valid_master_password($request->input('master_password'))) {
             throw new AuthenticationException('Invalid master password');
         }
         return $next($request);
-    }
-
-    /**
-     * Checks if Authorization token is valid
-     *
-     * @param Request $request
-     * @throws AuthenticationException
-     */
-    private function check_authorization_key(Request $request)
-    {
-        if (! $request->header('Authorization')) {
-            throw new AuthenticationException('Unauthenticated.');
-        }
-
-        if (! valid_signup_bearer_key($request->bearerToken())) {
-            throw new AuthenticationException('Invalid key');
-        }
     }
 }

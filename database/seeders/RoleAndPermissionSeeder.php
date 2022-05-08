@@ -20,10 +20,10 @@ class RoleAndPermissionSeeder extends Seeder
         Role::create(['name' => 'admin']);
         Role::create(['name' => 'user']);
 
-        Permission::create(['name' => 'can_view_system_configs']);
-        Permission::create(['name' => 'can_create_user']);
-        Permission::create(['name' => 'can_update_user']);
-        Permission::create(['name' => 'can_delete_user']);
+        Permission::create(['name' => 'view_system_configs']);
+        Permission::create(['name' => 'create_user']);
+        Permission::create(['name' => 'update_user']);
+        Permission::create(['name' => 'delete_user']);
 
         /**
          * TODO

@@ -20,7 +20,7 @@ if (! function_exists('system_config')) {
     }
 }
 
-if (! function_exists('valid_signup_bearer_key')) {
+if (! function_exists('valid_bearer_key')) {
     /**
      * Checking for signup key in system config
      *
@@ -28,9 +28,9 @@ if (! function_exists('valid_signup_bearer_key')) {
      * @return bool
      * @throws NotFoundException
      */
-    function valid_signup_bearer_key(string $user_key): bool
+    function valid_bearer_key(string $user_key): bool
     {
-        return $user_key === system_config(SystemConfig::SIGNUP_TOKEN_NAME);
+        return $user_key === system_config(SystemConfig::BEARER_TOKEN_NAME);
     }
 }
 

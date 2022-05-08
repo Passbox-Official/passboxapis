@@ -16,7 +16,7 @@ class SystemConfigSeeder extends Seeder
     public function run(): void
     {
         SystemConfig::create([
-            'name' => SystemConfig::SIGNUP_TOKEN_NAME,
+            'name' => SystemConfig::BEARER_TOKEN_NAME,
             'value' => 'admin@123',
         ]);
         SystemConfig::create([

@@ -2,11 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\SignUpController;
+use App\Http\Controllers\Auth\LoginController;
 
-$authMiddlewares = [
-    'middleware' => ['signup'],
+$commonConfigs = [
+    'middleware' => ['check.bearer.token'],
 ];
 
-Route::group($authMiddlewares, function () {
-    Route::post('/signup', [SignUpController::class, 'create_account']);
+Route::group($commonConfigs, function () {
+    Route::post('/signup', [SignUpController::class, 'create_account'])->middleware('signup');
+    Route::post('/login', [LoginController::class, 'do_login'])->middleware('login');
 });
+
