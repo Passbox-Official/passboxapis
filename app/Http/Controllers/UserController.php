@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-Use App\Facades\Responser;
 use Illuminate\Support\Str;
+use Illuminate\Http\JsonResponse;
+Use App\Facades\Responser;
+use App\Facades\User;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
-    public function logged_in_devices(Request $request)
+    public function logged_in_devices(Request $request): JsonResponse
     {
         $active_devices = auth()->user()->active_devices->map(function ($active_device) {
             return [
@@ -23,5 +25,11 @@ class UserController extends Controller
             ];
         });
         return Responser::ok('Active devices', Response::HTTP_OK, $active_devices);
+    }
+
+    public function delete_device(Request $request, $device_id): JsonResponse
+    {
+        User::delete_device_by_id($device_id);
+        return Responser::ok('Device deleted successfully!');
     }
 }

@@ -38,4 +38,18 @@ class User
         }
         return $user->active_devices;
     }
+
+    /**
+     * @throws NotFoundException
+     */
+    public function delete_device_by_id($device_id): bool
+    {
+        $history = UserSessionHistory::where('user_id', auth()->user()->id)
+            ->where('id', $device_id)
+            ->first();
+        if (! $history) {
+            throw new NotFoundException('Device id not found');
+        }
+        return $history->delete();
+    }
 }

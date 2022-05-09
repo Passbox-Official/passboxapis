@@ -31,6 +31,9 @@ return new class extends Migration
             $table->string('platform')->nullable()->comment('OS name');
             $table->string('device_info')->nullable()->comment('This data will be gathered from navigator.userAgent');
             $table->string('device_id')->nullable()->comment('This id will be gathered from a cookie or localStorage');
+
+            $table->softDeletes();
+            $table->timestamps();
         });
     }
 
