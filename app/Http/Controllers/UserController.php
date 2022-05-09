@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Facades\User;
 Use App\Facades\Responser;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
@@ -15,8 +15,9 @@ class UserController extends Controller
             return [
                 'id' => $active_device->id,
                 'login_at' => $active_device->login_at,
-                'token' => $active_device->token,
+                'token' => Str::limit($active_device->token, 10, '***'),
                 'platform' => $active_device->platform,
+                'device_name' => $active_device->device_name,
                 'device_info' => $active_device->device_info,
                 'device_id' => $active_device->device_id,
             ];
