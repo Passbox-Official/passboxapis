@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class LoginController extends Controller
 {
-    public function do_login(LoginRequest $request)
+    public function do_login(LoginRequest $request): JsonResponse
     {
         try {
             $user = User::by_email($request->input('email'));

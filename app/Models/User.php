@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
@@ -25,9 +26,9 @@ class User extends Authenticable
         'password',
     ];
 
-    public function active_devices()
+    public function active_devices(): HasMany
     {
         return $this->hasMany(UserSessionHistory::class, 'user_id')
-            ->where('logout_at', null);
+            ->where('logout_at', null)->orderByDesc('id');
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\Http\JsonResponse;
 
 class Responser
 {
-    public function ok(string $message, $httpCode = Response::HTTP_OK, array $data = []): JsonResponse
+    public function ok(string $message, $httpCode = Response::HTTP_OK, $data = []): JsonResponse
     {
         return response()->json([
             'message' => $message,

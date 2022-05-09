@@ -21,13 +21,11 @@ class MaxDeviceLoginMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        $total_active_device = (int) User::total_active_devices($request->input('email'))->count();
-        $max_active_device = system_config(SystemConfig::MAX_DEVICE_LOGIN);
-
+        $total_active_device = User::total_active_devices($request->input('email'))->count();
+        $max_active_device = (int) system_config(SystemConfig::MAX_DEVICE_LOGIN);
         if ($total_active_device >= $max_active_device) {
             throw new MaxDeviceExceededException(sprintf('Only %s device is allowed', $max_active_device));
         }
-
         return $next($request);
     }
 }
