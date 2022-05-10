@@ -52,4 +52,15 @@ class User
         }
         return $history->delete();
     }
+
+    public function do_logout(string $token = ''): void
+    {
+        UserSessionHistory::where('token', $token)
+            ->update([
+                'logout_at' => now(),
+            ]);
+        auth()->user()
+            ->currentAccessToken()
+            ->delete();
+    }
 }

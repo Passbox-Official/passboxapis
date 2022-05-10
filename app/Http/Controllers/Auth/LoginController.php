@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Facades\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class LoginController extends Controller
@@ -58,5 +59,11 @@ class LoginController extends Controller
         } catch (NotFoundException $exception) {
             return Responser::error($exception->getMessage(), Response::HTTP_NOT_FOUND);
         }
+    }
+
+    public function do_logout(Request $request)
+    {
+        User::do_logout($request->bearerToken());
+        return Responser::ok('User logged out successfully', Response::HTTP_OK);
     }
 }
