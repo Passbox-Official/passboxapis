@@ -20,6 +20,6 @@ class PasswordController extends Controller
     public function index()
     {
         $data = Password::index();
-        return $data;
+        return Responser::ok('Password index', Response::HTTP_OK, $data);
     }
 }
