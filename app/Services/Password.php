@@ -18,4 +18,9 @@ class Password
         }
         auth()->user()->passwords()->create($input);
     }
+
+    public function index()
+    {
+        return auth()->user()->passwords;
+    }
 }

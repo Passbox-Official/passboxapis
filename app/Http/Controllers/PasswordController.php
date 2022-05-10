@@ -16,4 +16,10 @@ class PasswordController extends Controller
         Password::store($request->validated());
         return Responser::ok('Password added successfully!', Response::HTTP_CREATED);
     }
+
+    public function index()
+    {
+        $data = Password::index();
+        return $data;
+    }
 }

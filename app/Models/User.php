@@ -36,7 +36,8 @@ class User extends Authenticable
 
     public function passwords(): HasMany
     {
-        return $this->hasMany(Password::class, 'user_id');
+        return $this->hasMany(Password::class, 'user_id')
+            ->orderBy('id', 'DESC');
     }
 
     public function url_exists(string $url = ''): bool
