@@ -17,7 +17,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/home';
+    public const HOME = '/';
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -27,29 +27,14 @@ class RouteServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureRateLimiting();
-        $this->configureAuthRoutes();
-        $this->configureApiRoutes();
-    }
 
-    /**
-     * Configuring auth routes for the application
-     *
-     * @return void
-     */
-    protected function configureAuthRoutes(): void
-    {
         $this->routes(function () {
             Route::prefix('auth')
                 ->middleware('api')
                 ->group(base_path('routes/api/auth.php'));
-        });
-    }
 
-    protected function configureApiRoutes(): void
-    {
-        $this->routes(function () {
             Route::middleware('api')
-                ->group(base_path('routes/api.php'));
+                ->group(base_path('routes/api/api.php'));
         });
     }
 
@@ -61,7 +46,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function configureRateLimiting(): void
     {
         RateLimiter::for('api', function (Request $request) {
-            return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
+            return Limit::perMinute(100)->by($request->user()?->id ?: $request->ip());
         });
     }
 }

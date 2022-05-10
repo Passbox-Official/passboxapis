@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Facades\Responser;
 use App\Facades\Password;
 use App\Http\Requests\Password\PasswordStoreRequest;
+use App\Http\Requests\Password\PasswordFindRequest;
+use App\Http\Resources\PasswordResource;
 
 class PasswordController extends Controller
 {
@@ -27,5 +29,11 @@ class PasswordController extends Controller
     {
         Password::destroy($id);
         return Responser::ok('Record deleted');
+    }
+
+    public function find(PasswordFindRequest $request): JsonResponse
+    {
+        $data = Password::find($request->validated('url'));
+        return new PasswordResource($data);
     }
 }

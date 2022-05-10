@@ -21,6 +21,7 @@ return new class extends Migration
             $table->timestamp('last_used')->nullable();
             $table->string('url');
             $table->string('name', 50)->nullable();
+            $table->string('username', 100);
             $table->string('password', 150);
             $table->text('note')->nullable();
             $table->tinyInteger('is_favourite')->default(Password::NOT_FAVOURITE);

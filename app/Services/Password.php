@@ -14,6 +14,7 @@ class Password
             'url' => $request['url'],
             'name' => $request['name'],
             'password' => $request['password'],
+            'username' => $request['username'],
         ];
         if (auth()->user()->url_exists($request['url'])) {
             throw new UrlAlreadyExistsException();
@@ -35,5 +36,17 @@ class Password
             throw new NotFoundException('Invalid id');
         }
         $password->delete();
+    }
+
+    public function find(string $url = '')
+    {
+        $result = PasswordModel::where('url', $url)
+            ->where('user_id', auth()->user()->id)
+            ->first();
+        if (! $result) {
+            throw new NotFoundException('Invalid url');
+        }
+        $result->update(['last_used' => now()]);
+        return $result;
     }
 }
