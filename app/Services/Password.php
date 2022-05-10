@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Exceptions\UrlAlreadyExistsException;
+use App\Exceptions\NotFoundException;
+use App\Models\Password as PasswordModel;
 
 class Password
 {
@@ -22,5 +24,16 @@ class Password
     public function index()
     {
         return auth()->user()->passwords;
+    }
+
+    public function destroy($id): void
+    {
+        $password = PasswordModel::where('user_id', auth()->user()->id)
+            ->where('id', $id)
+            ->first();
+        if (! $password) {
+            throw new NotFoundException('Invalid id');
+        }
+        $password->delete();
     }
 }

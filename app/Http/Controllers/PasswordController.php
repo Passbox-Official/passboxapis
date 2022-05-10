@@ -17,9 +17,15 @@ class PasswordController extends Controller
         return Responser::ok('Password added successfully!', Response::HTTP_CREATED);
     }
 
-    public function index()
+    public function index(): JsonResponse
     {
         $data = Password::index();
         return Responser::ok('Password index', Response::HTTP_OK, $data);
+    }
+
+    public function destroy(Request $request, $id)
+    {
+        Password::destroy($id);
+        return Responser::ok('Record deleted');
     }
 }
