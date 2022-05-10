@@ -29,6 +29,8 @@ class User extends Authenticable
     public function active_devices(): HasMany
     {
         return $this->hasMany(UserSessionHistory::class, 'user_id')
-            ->where('logout_at', null)->orderByDesc('id');
+            ->whereNull('logout_at')
+            ->whereNull('deleted_at')
+            ->orderByDesc('id');
     }
 }
