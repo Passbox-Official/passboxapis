@@ -20,4 +20,5 @@ Route::group($sessionConfigs, function () {
     Route::get('devices', [UserController::class, 'logged_in_devices']);
     Route::delete('devices/{device_id}', [UserController::class, 'delete_device']);
     Route::get('logout', [LoginController::class, 'do_logout']);
+    Route::post('change-password', [UserController::class, 'do_change_password']);
 });

@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 Use App\Facades\Responser;
 use App\Facades\User;
-use Symfony\Component\HttpFoundation\Response;
+use App\Http\Requests\Auth\ChangePasswordRequest;
 
 class UserController extends Controller
 {
@@ -31,5 +32,11 @@ class UserController extends Controller
     {
         User::delete_device_by_id($device_id);
         return Responser::ok('Device deleted successfully!');
+    }
+
+    public function do_change_password(ChangePasswordRequest $request): JsonResponse
+    {
+        User::change_password($request);
+        return Responser::ok('Password updated successfully!');
     }
 }

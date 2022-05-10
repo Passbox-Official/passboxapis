@@ -2,10 +2,11 @@
 
 namespace App\Services;
 
-use App\Models\UserSessionHistory;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User as UserModel;
 use Spatie\Permission\Models\Role;
+use App\Exceptions\InvalidPasswordException;
+use App\Models\UserSessionHistory;
+use App\Models\User as UserModel;
 use App\Exceptions\NotFoundException;
 
 class User
@@ -62,5 +63,19 @@ class User
         auth()->user()
             ->currentAccessToken()
             ->delete();
+    }
+
+    public function change_password($data): void
+    {
+        $old_password = $data->validated('old_password');
+        $new_password = $data->validated('new_password');
+
+        if (! Hash::check($old_password, auth()->user()->getAuthPassword())) {
+            throw new InvalidPasswordException('Old password mismatched');
+        }
+        UserModel::find(auth()->user()->id)
+            ->update([
+                'password' => Hash::make($new_password),
+            ]);
     }
 }
