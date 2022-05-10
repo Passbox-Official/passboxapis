@@ -33,4 +33,20 @@ class User extends Authenticable
             ->whereNull('deleted_at')
             ->orderByDesc('id');
     }
+
+    public function passwords(): HasMany
+    {
+        return $this->hasMany(Password::class, 'user_id');
+    }
+
+    public function url_exists(string $url = ''): bool
+    {
+        $site = $this->passwords()
+            ->where('url', $url)
+            ->first();
+        if ($site) {
+            return true;
+        }
+        return false;
+    }
 }

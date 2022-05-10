@@ -6,6 +6,7 @@ use App\Services\Responser;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 use App\Services\User;
+use App\Services\Password;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -35,6 +36,10 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind('responser', function () {
             return new Responser();
+        });
+
+        $this->app->bind('password-service', function () {
+            return new Password();
         });
     }
 }
