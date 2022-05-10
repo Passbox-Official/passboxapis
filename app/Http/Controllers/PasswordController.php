@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Resources\Json\JsonResource;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -31,7 +32,7 @@ class PasswordController extends Controller
         return Responser::ok('Record deleted');
     }
 
-    public function find(PasswordFindRequest $request): JsonResponse
+    public function find(PasswordFindRequest $request): JsonResource
     {
         $data = Password::find($request->validated('url'));
         return new PasswordResource($data);

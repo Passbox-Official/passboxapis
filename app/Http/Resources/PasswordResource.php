@@ -17,7 +17,7 @@ class PasswordResource extends JsonResource
         return [
             'message' => 'Password for ' . $this->url,
             'data' => [
-                'username' => $this->user_name,
+                'username' => $this->username,
                 'password' => $this->password,
             ],
         ];

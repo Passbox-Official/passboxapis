@@ -47,6 +47,12 @@ class Password
             throw new NotFoundException('Invalid url');
         }
         $result->update(['last_used' => now()]);
+
+        // Added data to password history table
+        auth()->user()->password_access_history()->create([
+            'password_id' => $result->id,
+            'created_at' => now(),
+        ]);
         return $result;
     }
 }

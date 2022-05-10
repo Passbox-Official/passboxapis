@@ -50,4 +50,9 @@ class User extends Authenticable
         }
         return false;
     }
+
+    public function password_access_history(): HasMany
+    {
+        return $this->hasMany(PasswordAccessHistory::class, 'user_id');
+    }
 }
