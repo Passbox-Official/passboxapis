@@ -19,6 +19,9 @@ class SignUpMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
+        if (! $request->has('master_password')) {
+            throw new AuthenticationException('Invalid master password');
+        }
         if (! valid_master_password($request->input('master_password'))) {
             throw new AuthenticationException('Invalid master password');
         }
