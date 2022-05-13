@@ -11,11 +11,18 @@ class SignupTest extends TestCase
 {
     use WithFaker;
 
-    private array $headers = [
-        'Accept' => 'application/json',
-        'Content-Type' => 'application/json',
-        'Authorization' => 'Bearer admin@123',
-    ];
+    private array $headers = [];
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->headers = [
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json',
+            'Authorization' => 'Bearer ' . env('DEFAULT_BEARER_TOKEN'),
+        ];
+    }
 
     public function test_missing_bearer_token(): void
     {
@@ -33,7 +40,7 @@ class SignupTest extends TestCase
     {
         $payload = [
             'email' => 'demogmail.com',
-            'master_password' => 'admin@123',
+            'master_password' => env('DEFAULT_SUDO_PASSWORD'),
         ];
         $this->withHeaders($this->headers)->postJson('/auth/signup', $payload)
             ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
@@ -46,7 +53,7 @@ class SignupTest extends TestCase
     {
         $payload = [
             'email' => 'demo@gmail.com',
-            'master_password' => 'admin@123',
+            'master_password' => env('DEFAULT_SUDO_PASSWORD'),
             'password' => 'admin@123',
         ];
         $this->withHeaders($this->headers)->postJson('/auth/signup', $payload)
@@ -60,7 +67,7 @@ class SignupTest extends TestCase
     {
         $payload = [
             'email' => 'demo@gmail.com',
-            'master_password' => 'admin@123',
+            'master_password' => env('DEFAULT_SUDO_PASSWORD'),
             'password' => 'admin@123',
             'confirm_password' => 'admin@12',
         ];
@@ -78,7 +85,7 @@ class SignupTest extends TestCase
             'email' => $signup_email,
             'password' => 'admin@123',
             'confirm_password' => 'admin@123',
-            'master_password' => 'admin@123',
+            'master_password' => env('DEFAULT_SUDO_PASSWORD'),
         ];
         $this->withHeaders($this->headers)->postJson('/auth/signup', $payload)
             ->assertStatus(Response::HTTP_CREATED);
@@ -94,7 +101,7 @@ class SignupTest extends TestCase
             'email' => $signup_email,
             'password' => 'admin@123',
             'confirm_password' => 'admin@123',
-            'master_password' => 'admin@123',
+            'master_password' => env('DEFAULT_SUDO_PASSWORD'),
         ];
         $this->withHeaders($this->headers)->postJson('/auth/signup', $payload)
             ->assertJson([

@@ -17,15 +17,15 @@ class SystemConfigSeeder extends Seeder
     {
         SystemConfig::create([
             'name' => SystemConfig::BEARER_TOKEN_NAME,
-            'value' => 'admin@123',
+            'value' => env('DEFAULT_BEARER_TOKEN'),
         ]);
         SystemConfig::create([
-            'name' => SystemConfig::MASTER_PASSWORD,
-            'value' => 'admin@123',
+            'name' => SystemConfig::SUDO_PASSWORD,
+            'value' => env('DEFAULT_SUDO_PASSWORD'),
         ]);
         SystemConfig::create([
             'name' => SystemConfig::MAX_DEVICE_LOGIN,
-            'value' => 3,
+            'value' => SystemConfig::MAX_DEVICE_LOGIN_DEFAULT_COUNT,
         ]);
     }
 }
