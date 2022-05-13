@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Auth;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Models\User;
 use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
 use Symfony\Component\HttpFoundation\Response;
+use Tests\TestCase;
 
 class SignupTest extends TestCase
 {
@@ -83,8 +83,8 @@ class SignupTest extends TestCase
         $signup_email = $this->faker->safeEmail();
         $payload = [
             'email' => $signup_email,
-            'password' => 'admin@123',
-            'confirm_password' => 'admin@123',
+            'password' => env('DEFAULT_USER_PASSWORD_TESTING'),
+            'confirm_password' => env('DEFAULT_USER_PASSWORD_TESTING'),
             'master_password' => env('DEFAULT_SUDO_PASSWORD'),
         ];
         $this->withHeaders($this->headers)->postJson('/auth/signup', $payload)
@@ -92,15 +92,12 @@ class SignupTest extends TestCase
         return $signup_email;
     }
 
-    /**
-     * @depends test_success_signup
-     */
-    public function test_signup_stopped_duplicate_email_check($signup_email): void
+    public function test_signup_stopped_duplicate_email_check(): void
     {
         $payload = [
-            'email' => $signup_email,
-            'password' => 'admin@123',
-            'confirm_password' => 'admin@123',
+            'email' => User::first()->email,
+            'password' => env('DEFAULT_USER_PASSWORD_TESTING'),
+            'confirm_password' => env('DEFAULT_USER_PASSWORD_TESTING'),
             'master_password' => env('DEFAULT_SUDO_PASSWORD'),
         ];
         $this->withHeaders($this->headers)->postJson('/auth/signup', $payload)
