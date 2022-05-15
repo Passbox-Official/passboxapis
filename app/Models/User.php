@@ -34,6 +34,17 @@ class User extends Authenticable
             ->orderByDesc('id');
     }
 
+    static function last_token($user_id): string
+    {
+        return UserSessionHistory::query()
+            ->where('id', $user_id)
+            ->whereNull('logout_at')
+            ->whereNull('deleted_at')
+            ->orderByDesc('id')
+            ->first()
+            ->token;
+    }
+
     public function passwords(): HasMany
     {
         return $this->hasMany(Password::class, 'user_id')
