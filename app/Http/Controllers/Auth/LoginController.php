@@ -9,11 +9,13 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Facades\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Symfony\Component\HttpFoundation\Response;
+use App\Http\Resources\UserResource;
 
 class LoginController extends Controller
 {
-    public function do_login(LoginRequest $request): JsonResponse
+    public function do_login(LoginRequest $request): UserResource
     {
         try {
             $user = User::by_email($request->input('email'));
@@ -53,15 +55,13 @@ class LoginController extends Controller
             ];
             $session_data = array_merge($session_data, $data);
             User::create_session_history($session_data);
-
-            return Responser::ok('User logged in', Response::HTTP_OK, $data);
-
+            return new UserResource($user, 'User logged in', $token->plainTextToken, $data['login_at']);
         } catch (NotFoundException $exception) {
             return Responser::error($exception->getMessage(), Response::HTTP_NOT_FOUND);
         }
     }
 
-    public function do_logout(Request $request)
+    public function do_logout(Request $request): JsonResponse
     {
         User::do_logout($request->bearerToken());
         return Responser::ok('User logged out successfully', Response::HTTP_OK);
