@@ -55,4 +55,14 @@ class Password
         ]);
         return $result;
     }
+
+    public function trashed()
+    {
+        return auth()->user()->passwords()->onlyTrashed()->get();
+    }
+
+    public function restoreTrashed($password_id)
+    {
+        return PasswordModel::withTrashed()->find($password_id)->restore();
+    }
 }

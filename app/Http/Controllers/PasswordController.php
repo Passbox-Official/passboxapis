@@ -37,4 +37,16 @@ class PasswordController extends Controller
         $data = Password::find($request->validated('url'));
         return new PasswordResource($data);
     }
+
+    public function trashed(): JsonResponse
+    {
+        $data = Password::trashed();
+        return Responser::ok('Deleted password index', Response::HTTP_OK, $data);
+    }
+
+    public function restoreTrashed(Request $request, $id): JsonResponse
+    {
+        Password::restoreTrashed($id);
+        return Responser::ok('Password restored', Response::HTTP_OK);
+    }
 }
