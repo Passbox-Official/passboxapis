@@ -78,4 +78,9 @@ class User
                 'password' => Hash::make($new_password),
             ]);
     }
+
+    public function profile()
+    {
+        return auth()->user();
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Http\JsonResponse;
@@ -38,5 +39,11 @@ class UserController extends Controller
     {
         User::change_password($request);
         return Responser::ok('Password updated successfully!');
+    }
+
+    public function profile()
+    {
+        $user = User::profile();
+        return new UserResource($user, 'User details');
     }
 }
