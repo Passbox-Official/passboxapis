@@ -83,4 +83,9 @@ class User
     {
         return auth()->user();
     }
+
+    public function update($payload)
+    {
+        return auth()->user()->update($payload);
+    }
 }

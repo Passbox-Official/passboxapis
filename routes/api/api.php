@@ -18,4 +18,5 @@ Route::group($sessionConfigs, function () {
     Route::put('password/trashed/restore/{id}', [PasswordController::class, 'restoreTrashed']);
 
     Route::get('/user', [UserController::class, 'profile']);
+    Route::put('/user', [UserController::class, 'update']);
 });

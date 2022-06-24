@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 Use App\Facades\Responser;
 use App\Facades\User;
 use App\Http\Requests\Auth\ChangePasswordRequest;
+use App\Http\Requests\UpdateProfileRequest;
 
 class UserController extends Controller
 {
@@ -41,9 +42,15 @@ class UserController extends Controller
         return Responser::ok('Password updated successfully!');
     }
 
-    public function profile()
+    public function profile(): UserResource
     {
         $user = User::profile();
         return new UserResource($user, 'User details');
+    }
+
+    public function update(UpdateProfileRequest $request): JsonResponse
+    {
+        $result = User::update($request->validated());
+        return Responser::ok('Profile updated successfully!');
     }
 }
